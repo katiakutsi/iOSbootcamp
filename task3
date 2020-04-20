@@ -1,0 +1,166 @@
+class Blogger {
+
+    var blogger : String
+    var posts : [BlogPost]
+    
+    init(blogger : String, posts : [BlogPost]){
+        self.blogger = blogger
+        self.posts = posts
+    }
+    
+    func evaluateAverage() -> Double {
+        
+        var s = 0.00
+        for i in 0...self.posts.count-1{
+            s += self.posts[i].onePost.1.rawValue
+        }
+        
+        return s/Double(posts.count)
+    
+    }
+    
+    func theMostPopular() -> (String, Double) {
+        var max = posts[0].onePost.1.rawValue
+        var index = 0
+        for i in 0...self.posts.count-1 {
+            if max < posts[i].onePost.1.rawValue{
+                max = posts[i].onePost.1.rawValue
+                index = i
+            }
+        }
+        return (posts[index].onePost.0, posts[index].onePost.1.rawValue)
+    }
+    
+    
+    func getEnum() -> [Category] {
+        var arr = [Category]()
+        for i in self.posts{
+            for category in i.onePost.2{
+                arr.append(category)
+            }
+        }
+        return arr
+    }
+    
+    
+}
+
+struct BlogPost {
+    var onePost : (String, Mark, [Category])
+    
+    init (onePost : (String, Mark, [Category])){
+        self.onePost = onePost
+    }
+    
+}
+
+enum Mark : Double {
+    case N0 = 0.00
+    case N1 = 1.00
+    case N2 = 2.00
+    case N3 = 3.00
+    case N4 = 4.00
+    case N5 = 5.00
+}
+
+enum Category{
+    case Technology
+    case Music
+    case Fashion
+    case Travel
+    case History
+    case Health
+    case Food
+    case Movie
+    
+}
+
+class Blog {
+    var bloggers : [Blogger]
+    init(bloggers : [Blogger]) {
+        self.bloggers = bloggers
+    }
+}
+
+var blog = Blog(bloggers: [Blogger(blogger : "Blogger 1",
+                                   posts: [BlogPost(onePost: ("post 1", Mark.N1, [Category.Fashion, Category.Music, Category.Movie])),
+                                           BlogPost(onePost: ("post 3", Mark.N4, [Category.Health, Category.Food, Category.Technology])),
+                                           BlogPost(onePost: ("post 4", Mark.N2, [Category.Music]))]),
+                           Blogger(blogger : "Blogger 2",
+                                   posts: [BlogPost(onePost: ("post 2", Mark.N4, [Category.Travel, Category.Food])),
+                                           BlogPost(onePost: ("post 6", Mark.N5, [Category.History, Category.Fashion, Category.Food]))]),
+                           Blogger(blogger: "Blogger 3",
+                                   posts: [BlogPost(onePost: ("post 5", Mark.N3, [Category.Music]))])])
+
+
+class AnswerQuestions {
+    static func numberOfBloggers(bloggers : [Blogger]) -> Int{
+        return bloggers.count
+    }
+    
+    static func theMostPopularBlogger(bloggers : [Blogger]) -> String{
+        var index = 0
+        var max = bloggers[0].evaluateAverage()
+        for i in 1...bloggers.count-1 {
+            if bloggers[i].evaluateAverage() > max{
+                max = bloggers[i].evaluateAverage()
+                index = i
+            }
+        }
+        return bloggers[index].blogger
+    }
+    
+    static func theMostPopularBlogpost(bloggers : [Blogger]) -> String{
+        var index = 0
+        var max = bloggers[0].theMostPopular().1
+        for i in 1...bloggers.count - 1{
+            if bloggers[i].theMostPopular().1 > max{
+                max = bloggers[i].theMostPopular().1
+                index = i
+            }
+        }
+        return bloggers[index].theMostPopular().0
+    }
+    
+    static func amountAverage(bloggers : [Blogger]) -> Double {
+        var s = 0.00
+        for i in bloggers{
+            s += i.evaluateAverage()
+        }
+        return s/Double(bloggers.count)
+    }
+    
+    static func theMostPopularCategory(bloggers : [Blogger]) -> [Category] {
+        var dict = [Category : Int]()
+        
+        var counter = 0
+        
+        for i in bloggers{
+            for cat in i.getEnum(){
+                if dict.keys.contains(cat){
+                    dict[cat]! += 1
+                }else{
+                    dict[cat] = 1
+                }
+                if dict[cat]! > counter{
+                    counter = dict[cat]!
+                }
+            }
+        }
+        
+        var keys = [Category]()
+        
+        for key in dict.keys{
+            if dict[key] == counter{
+                keys.append(key)
+            }
+        }
+        return keys
+    }
+}
+
+AnswerQuestions.numberOfBloggers(bloggers: blog.bloggers)
+AnswerQuestions.theMostPopularBlogger(bloggers: blog.bloggers)
+AnswerQuestions.theMostPopularBlogpost(bloggers: blog.bloggers)
+AnswerQuestions.amountAverage(bloggers: blog.bloggers)
+AnswerQuestions.theMostPopularCategory(bloggers: blog.bloggers)
