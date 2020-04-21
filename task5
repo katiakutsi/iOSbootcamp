@@ -30,11 +30,11 @@ print(name.numberOfConsonantals)
 print(name.reversedString)
 
 
-protocol MainClass{
+protocol Prot{
     func getRemains() -> Int
 }
 
-class Class1 : MainClass {
+class Class1 : Prot {
     
     var value : Int
     init(value : Int){
@@ -47,7 +47,7 @@ class Class1 : MainClass {
     
 }
 
-class Class2 : MainClass {
+class Class2 : Prot {
     
     var value : Int
     init(value : Int){
@@ -59,7 +59,7 @@ class Class2 : MainClass {
     }
 }
 
-class Class3 : MainClass {
+class Class3 : Prot {
     var value : Int
     init(value : Int){
         self.value = value
@@ -70,7 +70,7 @@ class Class3 : MainClass {
     }
 }
 
-var array: [MainClass] = [ Class1(value: 5) , Class1(value: 13) , Class1(value: 45),
+var array: [Prot] = [ Class1(value: 5) , Class1(value: 13) , Class1(value: 45),
                            Class2(value: 54) , Class2(value: 32), Class2(value: 21),
                            Class3(value: 109), Class3(value: 19), Class3(value: 18)]
 
