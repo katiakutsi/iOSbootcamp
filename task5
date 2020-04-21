@@ -1,0 +1,78 @@
+extension String{
+    var numberOfVowels : Int{
+        var counter = 0
+        for i in self{
+            if i == "a" || i == "e" || i == "i" || i == "o" || i == "u"{
+                counter += 1
+            }
+        }
+        return counter
+    }
+    
+    var numberOfConsonantals : Int{
+        var counter = 0
+        for i in self{
+            if i != "a" && i != "e" && i != "i" && i != "o" && i != "u"{
+                counter += 1
+            }
+        }
+        return counter
+    }
+    
+    var reversedString : String{
+        return(String(self.reversed()))
+    }
+}
+
+let name = "abcdefj"
+print(name.numberOfVowels)
+print(name.numberOfConsonantals)
+print(name.reversedString)
+
+
+protocol MainClass{
+    func getRemains() -> Int
+}
+
+class Class1 : MainClass {
+    
+    var value : Int
+    init(value : Int){
+        self.value = value
+    }
+    
+    func getRemains() -> Int{
+        return value % 10
+    }
+    
+}
+
+class Class2 : MainClass {
+    
+    var value : Int
+    init(value : Int){
+        self.value = value
+    }
+   
+    func getRemains() -> Int {
+        return value % 10
+    }
+}
+
+class Class3 : MainClass {
+    var value : Int
+    init(value : Int){
+        self.value = value
+    }
+    
+    func getRemains() -> Int {
+        return value % 10
+    }
+}
+
+var array: [MainClass] = [ Class1(value: 5) , Class1(value: 13) , Class1(value: 45),
+                           Class2(value: 54) , Class2(value: 32), Class2(value: 21),
+                           Class3(value: 109), Class3(value: 19), Class3(value: 18)]
+
+let sumOfRemains = array.reduce(0) {$0 + $1.getRemains()}
+print(sumOfRemains)
