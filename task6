@@ -1,0 +1,60 @@
+protocol baseProtocol {
+    func getName()->String
+    func getSetupDate()->Int
+    func getMainOffice()->String
+    func getFounders()->[String]
+}
+
+class Company : baseProtocol{
+    
+    var name : String
+    var setupDate : Int
+    var mainOffice : String
+    var founders : [String]
+    
+    init(name : String, setupDate : Int, mainOffice : String, founders : [String]){
+        self.name = name
+        self.setupDate = setupDate
+        self.mainOffice = mainOffice
+        self.founders = founders
+    }
+    
+    func getName()->String{
+        return name
+    }
+    
+    func getSetupDate()->Int{
+        return setupDate
+    }
+    
+    func getMainOffice()->String{
+        return mainOffice
+    }
+    
+    func getFounders()->[String]{
+        return founders
+    }
+}
+
+class Apple : Company {}
+class Google : Company {}
+class Facebook : Company{}
+
+var apple = Apple(name: "Apple", setupDate: 1976 , mainOffice: "California", founders: ["Steve Jobs", "Steve Wozniak", "Ronald Wayne"])
+print(apple.getName())
+print(apple.getSetupDate())
+print(apple.getMainOffice())
+print(apple.getFounders())
+
+var google = Google(name: "Google", setupDate: 1998, mainOffice: "California", founders: [ "Larry Page", "Sergey Brin" ] )
+print(google.getName())
+print(google.getSetupDate())
+print(google.getMainOffice())
+print(google.getFounders())
+
+var facebook = Facebook(name: "Facebook", setupDate: 2004, mainOffice: "California",
+                        founders: [ " Mark Zuckerberg",  "Eduardo Saverin", "Andrew McCollum", "Dustin Moskovitz", "Chris Hughes" ] )
+print(facebook.getName())
+print(facebook.getSetupDate())
+print(facebook.getMainOffice())
+print(facebook.getFounders())
